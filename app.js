@@ -13,6 +13,16 @@ var users = require('./routes/users');
 
 var app = express();
 
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackConfig = require('./config/webpack.config');
+
+// webpack setup
+var compiler = webpack(webpackConfig);
+app.use(webpackDevMiddleware(compiler, {
+  noInfo: true, publicPath: webpackConfig.output.publicPath
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
